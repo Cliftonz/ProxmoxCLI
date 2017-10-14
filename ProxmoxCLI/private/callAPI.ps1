@@ -14,10 +14,12 @@ function callREST {
         Write-Error "Please connect usinge Connect-PveServer."
         return $false
     }
-    # if ((Get-Date).Ticks -le $Script:PveTickets.Expire) {
-    #     # Check if ticket expired and grab a new one
-    #     Connect-PveServer -Server $Script:PveTickets.Server
-    # }
+    if (Test-PveConnection){
+        # Connected
+    }else{
+        Write-Error "Not able to conenct to $($Script:PveTickets.Server)"
+        return $false
+    }
     # Bypass ssl checking or servers without a public cert or internal CA cert
     if ($Script:PveTickets.BypassSSLCheck) {
         $CertificatePolicy = GetCertificatePolicy

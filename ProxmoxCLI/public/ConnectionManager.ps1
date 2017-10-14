@@ -104,4 +104,32 @@ function Connect-PveServer {
     }
 }
 
-Export-ModuleMember -Function @('Connect-PveServer') -Variable @('PveTickets')
+function Test-PveConnection {
+    [CmdletBinding()]
+    [OutputType([Boolean])]
+    param ()
+    process {
+        if(Get-PveVersion){
+            # We have a valid ticket and are getting data
+            Write-Verbose "Able to connect to $($Script:PveTickets.Server)"
+            return $true
+        }elseif ((Get-Date).Ticks -ge $Script:PveTickets.Expire) {
+            # Check if ticket expired and grab a new one
+            Write-Verbose "Connecting to $($Script:PveTickets.Server)"
+            Connect-PveServer -Server $Script:PveTickets.Server
+            if(Get-PveVersion){
+                # We have a valid ticket and are getting data
+                Write-Verbose "Connected to $($Script:PveTickets.Server)"
+                return $true
+            }else{
+                Write-Error "Not able to re-connect to server: $($Script:PveTickets.Server)"
+                return $false
+            }
+        }else{
+            Write-Error "Not able to connect to server: $($Script:PveTickets.Server)"
+            return $false
+        }
+    }
+}
+
+Export-ModuleMember -Variable @('PveTickets') -Cmdlet @('Connect-PveServer','Test-PveConnection')
