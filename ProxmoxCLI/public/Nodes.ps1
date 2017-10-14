@@ -22,6 +22,7 @@ The object(s) returned can be used to manipulate node(s)
 #>
 function Get-Node {
     [CmdletBinding()]
+    [OutputType([Node])]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [String]
@@ -67,6 +68,7 @@ The object(s) returned can be used to manipulate qemu(s)
 #>
 function Get-Qemu {
     [CmdletBinding()]
+    [OutputType([Qemu])]
     Param(
         [Parameter(mandatory = $false, ValueFromPipelineByPropertyName)]
         [String]
@@ -89,4 +91,4 @@ function Get-Qemu {
     
 }
 
-Export-ModuleMember -Function @('Get-Node', 'Get-Qemu')
+Export-ModuleMember -Cmdlet  @('Get-Node', 'Get-Qemu')

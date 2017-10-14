@@ -13,9 +13,10 @@ Run Connect-PveServer first
 #>
 function Get-PveVersion {
     [CmdletBinding()]
+    [OutputType([Object])]
     Param()
     return (callREST -Resource "version")
 }
 
 
-Export-ModuleMember -Function @('Get-PveVersion')
+Export-ModuleMember -Cmdlet @('Get-PveVersion')
