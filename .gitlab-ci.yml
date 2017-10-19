@@ -1,5 +1,6 @@
-#before_script:
-#  - apt-get update -qq && apt-get install -y -qq sqlite3 libsqlite3-dev nodejs
+before_script:
+  - sudo apt update
+  - sudo apt upgrade -y powershell
 stages:
   - test
 #  - release
