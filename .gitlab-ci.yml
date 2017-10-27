@@ -9,7 +9,7 @@ variables:
 Test:
   stage: test
   script:
-    - powershell -Command "./build.ps1" "-Task Pester"
+    - pwsh -Command "./build.ps1" "-Task Pester"
 #  except:
 #    - master
 #Release:
