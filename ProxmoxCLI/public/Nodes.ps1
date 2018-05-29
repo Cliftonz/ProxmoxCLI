@@ -1,3 +1,29 @@
+enum NodeServices {
+    pveproxy
+    pvedaemon
+    spiceproxy
+    pvestatd
+    pve_cluster
+    corosync
+    pve_firewall
+    pvefw_logger
+    pve_ha_crm
+    pve_ha_lrm
+    sshd
+    syslog
+    cron
+    postfix
+    ksmtuned
+    systemd_timesyncd
+}
+
+enum NodeServiceState {
+    reload
+    restart
+    start
+    stop
+}
+
 <#
 .SYNOPSIS
 Retruns Nodes from currently connected Proxmox host
@@ -26,7 +52,8 @@ function Get-Node {
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [String]
-        $Node
+        $Node,
+        [ScriptBlock]$Filter
     )
 
     # TODO - Expand this to return more information, probably in Node class.
